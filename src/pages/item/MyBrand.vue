@@ -29,7 +29,7 @@
         </td>
         <td class="text-xs-center">{{ props.item.id }}</td>
         <td class="text-xs-center">{{ props.item.name }}</td>
-        <td class="text-xs-center"><img :src="props.item.image"/></td>
+        <td class="text-xs-center"><img v-if="!!props.item.image" width="102" height="36" :src="props.item.image"/></td>
         <td class="text-xs-center">{{ props.item.letter }}</td>
         <td class="text-xs-center">
             <div class="text-xs-center">
@@ -150,16 +150,16 @@
             this.$router.push("/login");
           });
         },
-        editBrand(oldBrand){
+        editBrand(item){
           //根据品牌信息查询商品分类
           this.verify().then(() => {
-            this.$http.get("/item/category/bid/"+oldBrand.id).then(
+            this.$http.get("/item/category/bid/"+item.id).then(
               ({data}) => {
                 this.isEdit=true;
                 //显示弹窗
                 this.show=true;
                 //获取要编辑的brand
-                this.oldBrand=oldBrand;
+                this.oldBrand=item;
                 this.oldBrand.categories = data;
               }
             ).catch();
